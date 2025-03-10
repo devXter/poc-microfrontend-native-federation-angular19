@@ -1,0 +1,15 @@
+<nav class="main-nav">
+  <div class="logo">
+    <a routerLink="/">Angular MFE Demo</a>
+  </div>
+  <div class="nav-links">
+    <a
+      routerLink="/"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Inicio</a
+    >
+    <a routerLink="/products" routerLinkActive="active">Productos</a>
+    <a routerLink="/cart" routerLinkActive="active">Carrito</a>
+  </div>
+</nav>

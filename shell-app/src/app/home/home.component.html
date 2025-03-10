@@ -1,0 +1,20 @@
+<div class="home-container">
+  <h1>Angular 19 Microfrontends Demo</h1>
+  <p>
+    Demostración de microfrontends con Native Federation
+  </p>
+
+  <div class="info-section">
+
+    <div class="navigation-section">
+      <h3>Navega entre los diferentes componentes:</h3>
+      <div class="nav-buttons">
+        <a routerLink="/" class="nav-button">Inicio</a>
+        <a [routerLink]="['/products']" class="nav-button"
+          >Catálogo de Productos</a
+        >
+        <a routerLink="/cart" class="nav-button">Carrito de Compras</a>
+      </div>
+    </div>
+  </div>
+</div>

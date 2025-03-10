@@ -1,0 +1,60 @@
+.home-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    color: #333;
+    border-bottom: 2px solid #4a7bff;
+    padding-bottom: 10px;
+  }
+  
+  .info-section {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  h2 {
+    color: #4a7bff;
+    margin-top: 25px;
+    margin-bottom: 15px;
+  }
+  
+  .mfe-description {
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #e9f5ff;
+    border-left: 4px solid #4a7bff;
+    border-radius: 4px;
+  }
+  
+  .navigation-section {
+    margin-top: 30px;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #eee;
+  }
+  
+  .nav-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+  }
+  
+  .nav-button {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #4a7bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  .nav-button:hover {
+    background-color: #3a6ae8;
+  }

@@ -1,0 +1,23 @@
+<div class="products-container">
+  <h2>Catálogo de Productos</h2>
+  <p>Este componente proviene del Microfrontend 1 (MFE1)</p>
+
+  <div class="filters">
+    <button (click)="sortByPrice()">
+      Ordenar por precio {{ sortAscending ? "↑" : "↓" }}
+    </button>
+  </div>
+
+  <div class="products-grid">
+    @for (product of products; track product.id) {
+    <div class="product-card">
+      <h3>{{ product.name }}</h3>
+      <p class="price">{{ product.price | currency : "USD" }}</p>
+      <p class="description">{{ product.description }}</p>
+      <button (click)="addToCart(product)">Añadir al carrito</button>
+    </div>
+    } @empty {
+    <p>No hay productos disponibles</p>
+    }
+  </div>
+</div>
