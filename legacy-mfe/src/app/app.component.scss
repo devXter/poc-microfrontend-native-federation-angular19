@@ -1,0 +1,37 @@
+.legacy-container {
+  border: 2px solid #ff5722;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 15px;
+  background-color: #fff3e0;
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  color: #e64a19;
+}
+
+.legacy-content {
+  margin-top: 20px;
+}
+
+.counter-section {
+  background-color: white;
+  border: 1px solid #ffccbc;
+  border-radius: 4px;
+  padding: 15px;
+}
+
+button {
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin-right: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #e64a19;
+}

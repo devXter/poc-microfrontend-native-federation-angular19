@@ -10,6 +10,12 @@
       >Inicio</a
     >
     <a routerLink="/products" routerLinkActive="active">Productos</a>
-    <a routerLink="/cart" routerLinkActive="active">Carrito</a>
+    <a routerLink="/cart" routerLinkActive="active" class="cart-link">
+      Carrito
+      <span *ngIf="cartCount > 0" class="cart-badge">{{ cartCount }}</span>
+    </a>
+    <a routerLink="/legacy" routerLinkActive="active" class="legacy-link">
+      Legacy
+    </a>
   </div>
 </nav>

@@ -1,0 +1,18 @@
+<div class="legacy-wrapper">
+  <h2>Wrapper para el Microfrontend Legacy</h2>
+  <p>Este componente envuelve un Web Component creado con Angular 5</p>
+
+  <div class="integration-status" *ngIf="isLegacyLoaded">
+    <p>
+      Estado de integración:
+      <span class="status-success">Cargado correctamente</span>
+    </p>
+    <p *ngIf="lastCounterValue !== null">
+      Último valor del contador recibido:
+      <strong>{{ lastCounterValue }}</strong>
+    </p>
+  </div>
+
+  <!-- Aquí se cargará el Web Component -->
+  <div id="legacy-container"></div>
+</div>

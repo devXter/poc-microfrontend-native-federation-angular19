@@ -1,0 +1,19 @@
+.legacy-wrapper {
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.integration-status {
+  margin: 15px 0;
+  padding: 10px;
+  background-color: #f0fff4;
+  border-left: 4px solid #48bb78;
+  border-radius: 4px;
+}
+
+.status-success {
+  color: #2f855a;
+  font-weight: bold;
+}

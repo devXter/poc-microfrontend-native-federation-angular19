@@ -1,11 +1,11 @@
-const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');
+const {withNativeFederation, shareAll} = require('@angular-architects/native-federation/config');
 
 module.exports = withNativeFederation({
 
   name: 'mfe1',
 
   exposes: {
-    './ProductsComponent': './src/app/products/products.component.ts',
+    './ProductsComponent': './src/app/products/products.component.ts'
   },
 
   shared: {
@@ -16,11 +16,11 @@ module.exports = withNativeFederation({
     'rxjs/ajax',
     'rxjs/fetch',
     'rxjs/testing',
-    'rxjs/webSocket',
+    'rxjs/webSocket'
     // Add further packages you don't need at runtime
   ]
 
   // Please read our FAQ about sharing libs:
   // https://shorturl.at/jmzH0
-  
+
 });
