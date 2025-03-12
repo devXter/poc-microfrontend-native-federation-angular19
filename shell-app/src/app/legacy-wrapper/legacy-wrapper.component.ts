@@ -7,10 +7,12 @@ import {
 } from '@angular/core';
 import { EventBusService, EventTypes } from '../shared/event-bus.service';
 import { NgIf } from '@angular/common';
+import { RouterModule, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-legacy-wrapper',
-  imports: [NgIf],
+  imports: [NgIf, RouterModule, RouterOutlet],
+  standalone: true,
   templateUrl: './legacy-wrapper.component.html',
   styleUrl: './legacy-wrapper.component.scss',
 })
@@ -20,38 +22,21 @@ export class LegacyWrapperComponent
   isLegacyLoaded = false;
   lastCounterValue: number | null = null;
 
-  private legacyScript: HTMLScriptElement | null = null;
-  private counterEventListener: any;
+  private messageListener: any;
   private eventBus: EventBusService = inject(EventBusService);
 
   ngOnInit() {
-    // Cargar el Web Component dinámicamente
+    // Cargar el Web Component en iframe
     this.loadLegacyComponent();
 
-    // Configurar el listener para el evento personalizado
-    this.counterEventListener = (event: any) => {
-      if (event.detail && typeof event.detail.counter === 'number') {
-        this.lastCounterValue = event.detail.counter;
-
-        // Emitir el evento al bus de eventos para comunicación con otros MFEs
-        this.eventBus.emit(
-          EventTypes.LEGACY_COUNTER_CHANGED,
-          this.lastCounterValue
-        );
-      }
-    };
-
-    window.addEventListener(
-      'legacy-counter-changed',
-      this.counterEventListener
-    );
+    // Configurar listener para comunicación con iframe
+    this.setupMessageListener();
   }
 
   ngAfterViewInit() {
     // Reintentar la carga si no se cargó inicialmente
     setTimeout(() => {
       if (!this.isLegacyLoaded) {
-        console.log('Reintentando cargar el componente legacy...');
         this.loadLegacyComponent();
       }
     }, 1000);
@@ -59,38 +44,54 @@ export class LegacyWrapperComponent
 
   ngOnDestroy() {
     // Limpiar los listeners para evitar memory leaks
-    if (this.counterEventListener) {
-      window.removeEventListener(
-        'legacy-counter-changed',
-        this.counterEventListener
-      );
-    }
-
-    // Eliminar el script si existe
-    if (this.legacyScript && this.legacyScript.parentNode) {
-      this.legacyScript.parentNode.removeChild(this.legacyScript);
+    if (this.messageListener) {
+      window.removeEventListener('message', this.messageListener);
     }
   }
 
-  private loadLegacyComponent() {
-    this.legacyScript = document.createElement('script');
-    this.legacyScript.src = 'http://localhost:4203/legacy-element.js';
-    this.legacyScript.onload = () => {
-      console.log('Componente legacy cargado exitosamente');
-      this.isLegacyLoaded = true;
+  private setupMessageListener() {
+    this.messageListener = (event: MessageEvent) => {
+      // Asegurarse de que el mensaje viene del origen correcto
+      if (event.origin === 'http://localhost:4203') {
+        if (event.data && typeof event.data.counter === 'number') {
+          this.lastCounterValue = event.data.counter;
 
-      // Insertar el elemento personalizado
-      const container = document.getElementById('legacy-container');
-      if (container) {
-        const legacyElement = document.createElement('legacy-element');
-        container.appendChild(legacyElement);
+          // Emitir el evento al bus de eventos para comunicación con otros MFEs
+          this.eventBus.emit(
+            EventTypes.LEGACY_COUNTER_CHANGED,
+            this.lastCounterValue
+          );
+        }
       }
     };
 
-    this.legacyScript.onerror = (error) => {
-      console.error('Error al cargar el componente legacy:', error);
-    };
+    window.addEventListener('message', this.messageListener);
+  }
 
-    document.body.appendChild(this.legacyScript);
+  private loadLegacyComponent() {
+    setTimeout(() => {
+      const container = document.getElementById('legacy-container');
+      if (container) {
+        // Limpiar el contenedor
+        container.innerHTML = '';
+
+        // Crear un iframe para aislamiento total
+        const iframe = document.createElement('iframe');
+        iframe.id = 'legacy-iframe';
+        iframe.style.width = '100%';
+        iframe.style.height = '500px';
+        iframe.style.border = 'none';
+
+        // Configurar el iframe para cargar el componente legacy
+        iframe.src = 'http://localhost:4203/elements/standalone.html';
+
+        // Marcar como cargado cuando el iframe se cargue
+        iframe.onload = () => {
+          this.isLegacyLoaded = true;
+        };
+
+        container.appendChild(iframe);
+      }
+    }, 100);
   }
 }

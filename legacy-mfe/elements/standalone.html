@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Legacy Component</title>
+    <base href="/elements/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles.css" />
+    <script>
+      // Configuración para comunicación con la aplicación padre
+      window.addEventListener("message", function (event) {
+        // Solo procesar mensajes de la aplicación shell
+        if (event.origin === "http://localhost:4200") {
+          // Procesar comandos desde la shell-app si es necesario
+        }
+      });
+
+      // Transmitir eventos del contador al padre
+      window.addEventListener("legacy-counter-changed", function (event) {
+        if (event.detail && typeof event.detail.counter === "number") {
+          window.parent.postMessage(
+            {
+              counter: event.detail.counter,
+            },
+            "http://localhost:4200"
+          );
+        }
+      });
+
+      // Silenciar errores del router
+      window.addEventListener(
+        "error",
+        function (e) {
+          if (e.message && e.message.includes("Cannot match any routes")) {
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+          }
+        },
+        true
+      );
+    </script>
+  </head>
+  <body>
+    <!-- Elemento requerido por Angular 5 -->
+    <app-root></app-root>
+
+    <div style="padding: 20px">
+      <legacy-element></legacy-element>
+    </div>
+
+    <script src="legacy-element.js"></script>
+  </body>
+</html>
